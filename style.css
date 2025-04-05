@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 10px;
+    background-color: #bbada0;
+    padding: 10px;
+    border-radius: 10px;
+    width: max-content;
+  }
+  
+  .tile {
+    width: 100px;
+    height: 100px;
+    background-color: #cdc1b4;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+  
+  .tile[data-value="2"] { background-color: #eee4da; }
+  .tile[data-value="4"] { background-color: #ede0c8; }
+  /* You can add more styles for 8, 16, etc. */
