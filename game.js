@@ -1,9 +1,9 @@
 // Contains all the game logic for 2048
 
-const board = [
-    0, 0, 2, 0,
+let board = [
     0, 0, 0, 0,
-    0, 0, 0, 2,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
     0, 0, 0, 0
 ]
 
@@ -26,5 +26,28 @@ function renderBoard(board){
     }
 
 }
+
+function addRandomTile(board){
+    // Find empty cells
+    const emptyIndices = board
+    .map((value,index) => value === 0 ? index : -1)
+    .filter(index => index!== -1);
+
+    //Board is full
+    if (emptyIndices.length === 0) return;
+
+    // Choosing random choice from the empty indices array
+    const randIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+
+    // 90% chance of being a 2 and 10% chance of being a 4
+    const newValue = Math.random() < 0.9 ? 2 : 4
+
+    // Placing random value on the board
+    board[randIndex] = newValue
+}
+
+
+addRandomTile(board)
+addRandomTile(board)
 
 renderBoard(board);
