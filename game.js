@@ -91,6 +91,10 @@ let direction = ""
 
 // Movement function
 function move(direction){
+
+    // JSON.stringify used to compare the boards state before and after a move. Arrays cannot be directly compared so you need to stringify the board
+    let oldBoard = JSON.stringify(board);
+
     switch(direction){
         case "left":
             // Loops through each row and applies slideLeft to the row
@@ -110,6 +114,12 @@ function move(direction){
         case "down":
             slideDown();
             break;
+    }
+    let newBoard = JSON.stringify(board); // After move, check if board changed
+
+    if (oldBoard !== newBoard) {
+        addRandomTile(board);      // Only add tile if something moved
+        renderBoard(board);        // Update the HTML
     }
 }
 
