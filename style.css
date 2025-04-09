@@ -29,4 +29,15 @@
   
   .tile[data-value="2"] { background-color: #eee4da; }
   .tile[data-value="4"] { background-color: #ede0c8; }
+  .tile[data-value="8"] { background-color: #f2b179; }
+  .tile[data-value="16"] { background-color: #f59563; }
+  .tile[data-value="32"] { background-color: #f67c5f; }
+  .tile[data-value="64"] { background-color: #f65e3b; }
+  .tile[data-value="128"] { background-color: #edcf72; }
+  .tile[data-value="256"] { background-color: #edcc61; }
+  .tile[data-value="512"] { background-color: #edc850; }
+  .tile[data-value="1024"] { background-color: #edc53f; }
+  .tile[data-value="2048"] { background-color: #edc22e; }
+
+  
   /* You can add more styles for 8, 16, etc. */
