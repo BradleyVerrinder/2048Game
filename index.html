@@ -8,11 +8,17 @@
 <body>
     <h1>2048</h1>
     <div class="wrapper">
-        <div class="board"></div>
+        <div id="gameContainer">
+            <div class="board">
+            </div>
+            <div id="gameOverMessage" class="hidden">
+                <p>Game Over!</p>
+                <button id="startAgainBtn">Start Again</button>
+            </div>
+        </div>
+
     </div>
     <button onclick="renderBoard(Board)">press</button>
-
-
     <script src="game.js"></script>
 </body>
 </html>

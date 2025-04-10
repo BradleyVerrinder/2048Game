@@ -121,6 +121,7 @@ function move(direction){
         addRandomTile(board);      // Only add tile if something moved
         renderBoard(board);        // Update the HTML
     }
+    isGameOver(board);
 }
 
 // Slide functions
@@ -214,11 +215,64 @@ function slideDown(){
     }
 }
 
+// Checking for game over
+
+function hasEmptyTile(board){
+    // Loops through each row in the board and checks for zeros
+    return board.some(row => row.includes(0));
+}
+
+function hasMergeableTiles(board){
+    // i = Rows :  J = Columns : Comparing adjacent tiles to see if they can still be merged
+    for (let i = 0; i < 4; i++){
+        for (let j = 0; j < 4; j++){
+            if (j < 3 && board[i][j] === board[i][j+1]){
+                return true;  // Checks right
+            }
+
+            if (i < 3 && board[i][j] === board[i+1][j]){
+                return true; // Checks down
+            }
+            
+        }
+    }
+    return false;
+}
+
+function isGameOver(board){
+    if (!hasEmptyTile(board) && !hasMergeableTiles(board)){
+        // Showing game over mesage
+        document.getElementById("gameOverMessage").classList.remove("hidden");
+        console.log("game over")
+    }
+}
+
+// Resetting the game upon click
+document.getElementById("startAgainBtn").addEventListener("click", function() {
+    board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ];
+
+    // Hide the game over message
+    document.getElementById("gameOverMessage").classList.add("hidden");
+
+    
+    // Add random tiles to start
+    addRandomTile(board);
+    addRandomTile(board);
+
+    // Re-render the board
+    renderBoard(board);
+})
 
 
+
+// Initial rendering of the board
 addRandomTile(board)
 addRandomTile(board)
-
 
 renderBoard(board);
 

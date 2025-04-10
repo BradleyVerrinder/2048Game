@@ -4,6 +4,13 @@
     align-items: center; /* Center vertically */
 }
 
+#gameContainer {
+  position: relative;
+  width: max-content;
+  margin: auto;
+}
+
+
 .board {
     display: grid;
     grid-template-columns: repeat(4, 100px);
@@ -39,5 +46,37 @@
   .tile[data-value="1024"] { background-color: #edc53f; }
   .tile[data-value="2048"] { background-color: #edc22e; }
 
-  
-  /* You can add more styles for 8, 16, etc. */
+  .hidden {
+    display: none!important;
+  }
+
+  #gameOverMessage {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(228, 224, 224, 0.8);
+    color: black;
+    text-align: center;
+    z-index: 10;
+  }
+
+  #gameOverMessage p {
+    padding: 10px;
+  }
+
+  #startAgainBtn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#startAgainBtn:hover {
+    background-color: #45a049;
+}
+
