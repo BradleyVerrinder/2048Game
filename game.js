@@ -126,6 +126,16 @@ function move(direction){
 
 // Slide functions
 
+// Updating score variables
+let score = 0;
+let scoreDOM = document.getElementById("score");
+
+// Best score variables
+let bestScore = localStorage.getItem("bestScore") || 0;
+
+const bestScoreDOM = document.getElementById("best-score");
+bestScoreDOM.textContent = bestScore;
+
 function slideLeft(row) {
     // Removing zeros
     let filtered = row.filter(val => val !== 0);
@@ -134,6 +144,7 @@ function slideLeft(row) {
     for (let i = 0; i < filtered.length; i++) {
         if (filtered[i] === filtered[i + 1]) {
             merged.push(filtered[i] * 2);
+            score += filtered[i] * 2;
             i++;
         } else {
             merged.push(filtered[i]);
@@ -142,6 +153,16 @@ function slideLeft(row) {
 
     while (merged.length < 4) {
         merged.push(0);
+    }
+
+    scoreDOM.textContent = score; // Updating the score on the DOM element
+
+    // If current score is bigger than best score, update best to current and update the best score value
+    if (score > bestScore){
+        bestScore = score;
+        localStorage.setItem("bestScore", bestScore);
+        bestScoreDOM.textContent = bestScore; // Updating best score on the DOM element
+
     }
 
     return merged;
@@ -177,6 +198,7 @@ function slideRight(row) {
     for (let i = 0; i < filtered.length; i++) {
         if (filtered[i] === filtered[i + 1]) {
             merged.push(filtered[i] * 2);
+            score += filtered[i] * 2;
             i++; // Skip next, since it was merged (This was previously done but calling .splice[filtered[i+1]])
         } else {
             merged.push(filtered[i]);
@@ -188,6 +210,16 @@ function slideRight(row) {
         merged.push(0);
     }
 
+    scoreDOM.textContent = score; // Updating score on the DOM element
+
+    // If current score is bigger than best score, update best to current and update the best score value
+    if (score > bestScore){
+        bestScore = score;
+        localStorage.setItem("bestScore", bestScore);
+        bestScoreDOM.textContent = bestScore; // Updating best score on the DOM element
+
+    }
+    
     // Reverse back to restore slide-right behavior
     return merged.reverse();
 }
@@ -258,6 +290,10 @@ document.getElementById("startAgainBtn").addEventListener("click", function() {
 
     // Hide the game over message
     document.getElementById("gameOverMessage").classList.add("hidden");
+
+    // Resetting score after restarting game
+    score = 0;
+    scoreDOM.textContent = 0;
 
     
     // Add random tiles to start

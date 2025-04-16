@@ -1,3 +1,109 @@
+.main-wrapper{
+  width: 70%;
+  margin: auto;
+}
+
+.header h1{
+  font-family: 'Rubik';
+  font-size: 48px;
+  color: #756452;
+}
+
+.header{
+  display:flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.score-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-left: 150px;
+}
+
+.score-box{
+  display: flex;
+  flex-direction: column;
+  background-color: #bbada0;
+  border-radius: 10px;
+  padding: 10px 10px;
+  text-align: center;
+  color: #fff;
+  min-width: 80px;
+  max-height: 40px;
+}
+
+.best-score-box{
+  display: flex;
+  flex-direction: column;
+  border: #bbada0 1px solid;
+  border-radius: 10px;
+  padding: 10px 10px;
+  text-align: center;
+  color: #bbada0;
+  min-width: 80px;
+  max-height: 40px;
+}
+
+.score-box .label {
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-family: 'Rubik';
+}
+
+.score-box .value {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Rubik';
+}
+
+.best-score-box .label {
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-family: 'Rubik';
+}
+
+.best-score-box .value {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Rubik';
+}
+
+.new-game-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+a{
+  text-decoration: none;
+  color: #bbada0;
+  border: none;
+  padding: 0px 16px;
+  font-family: 'Rubik';
+}
+
+a:hover {
+  text-decoration: underline; 
+  text-decoration-color: #bbada0;  
+}
+
+.new-game-container .score-box button {
+  font-size: 18px;
+  font-family: 'Rubik';
+  border: none;
+  text-decoration: none;
+  background-color: #bbada0;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+
 .wrapper {
     display: flex;
     justify-content: center;
@@ -17,22 +123,44 @@
     grid-template-rows: repeat(4, 100px);
     gap: 10px;
     background-color: #bbada0;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 20px;
     width: max-content;
   }
   
   .tile {
+    font-family: Rubik;
     width: 100px;
     height: 100px;
     background-color: #cdc1b4;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 10px;
+    transition: transform 0.9s ease;
   }
+
+  .tile-moved {
+    animation: movePop 0.15s ease;
+}
+
+.tile-merged {
+    animation: mergePop 0.25s ease;
+    z-index: 10;
+}
+
+@keyframes movePop {
+    0% { transform: scale(1.1); }
+    50% {transform:scale(1.2);}
+    100% { transform: scale(1); }
+}
+
+@keyframes mergePop {
+    0% { transform: scale(1.3); background-color: #f1c40f; }
+    100% { transform: scale(1); }
+}
   
   .tile[data-value="2"] { background-color: #eee4da; }
   .tile[data-value="4"] { background-color: #ede0c8; }

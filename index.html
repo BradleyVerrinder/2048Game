@@ -4,21 +4,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2048</title>
     <link rel = "stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Rubik' rel='stylesheet'>
 </head>
 <body>
-    <h1>2048</h1>
-    <div class="wrapper">
-        <div id="gameContainer">
-            <div class="board">
+    <div class="main-wrapper">
+        <div class="header">
+            <h1><strong>2048</strong></h1>
+            <div class="score-container">
+                <div class="score-box">
+                    <span class="label">SCORE</span>
+                    <span class="value" id="score">0</span>
+                </div>
+                <div class="best-score-box">
+                    <span class="label">BEST</span>
+                    <span class="value" id="best-score">0</span>
+                </div>
             </div>
-            <div id="gameOverMessage" class="hidden">
-                <p>Game Over!</p>
-                <button id="startAgainBtn">Start Again</button>
+            <div class="new-game-container">
+                <div class="feedback">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScZldyVgauCIUTfGVlV90-7Za_6kYUSMGcaNmh6WGIfOAK_RA/viewform?pli=1">Give Feedback</a>
+                </div>
+                <div class="score-box">
+                    <button class="new-game-button">New Game</span>
+                </div>
             </div>
         </div>
-
+        <div class="wrapper">
+            <div id="gameContainer">
+                <div class="board">
+                </div>
+                <div id="gameOverMessage" class="hidden">
+                    <p>Game Over!</p>
+                    <button id="startAgainBtn">Start Again</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <button onclick="renderBoard(Board)">press</button>
     <script src="game.js"></script>
 </body>
 </html>
