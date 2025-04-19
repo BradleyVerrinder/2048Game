@@ -189,10 +189,12 @@ a:hover {
     color: black;
     text-align: center;
     z-index: 10;
+    border-radius: 10px;
   }
 
   #gameOverMessage p {
     padding: 10px;
+    font-family: 'Rubik';
   }
 
   #startAgainBtn {
@@ -202,9 +204,64 @@ a:hover {
     color: white;
     border: none;
     cursor: pointer;
+    font-family: 'Rubik';
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 #startAgainBtn:hover {
     background-color: #45a049;
 }
 
+.bottom-button-panel {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  background-color: #eae7d9;
+  padding: 15px 25px;
+  border-radius: 15px;
+  width: fit-content;
+  margin: 40px auto;
+}
+
+.action-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-button {
+  background-color: #bbada0;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 0 #bbb5a6;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.action-button:hover {
+  background-color: #ede4d9;
+}
+
+.action-button img {
+  width: 40px;
+  height: 40px;
+}
+
+.charge-bars {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.bar {
+  width: 12px;
+  height: 6px;
+  border-radius: 2px;
+  background-color: #d6cdc4;
+}
+
+.bar.filled {
+  background-color: #8f7a66;
+}
