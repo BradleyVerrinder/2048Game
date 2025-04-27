@@ -110,6 +110,7 @@ function addRandomTile(board) {
 document.addEventListener("keydown", handleKeyPress);
 
 function handleKeyPress(e){
+    if (isSwapping) return; // Don't move when swapping
     switch (e.key){
         case "ArrowUp":
             move("up");
