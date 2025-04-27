@@ -7,6 +7,11 @@ let board = [
     [0, 0, 0, 0]
 ]
 
+// POWERUPS LOGIC
+let isSwapping = false;
+let firstSwapTile = null;
+let swapsLeft = 3;
+
 
 function renderBoard(board){
 
@@ -30,6 +35,40 @@ function renderBoard(board){
                 tile.textContent = value;
                 tile.setAttribute("data-value", value);
             }
+
+            // FUNCTION FOR SWAPPING POWERUP//
+            //--------------------------------------------------------------------------------------------//
+            // Makes all tiles clickable and allows user to swap 2 tiles of their choice
+            tile.addEventListener("click", () => {
+                if (!isSwapping) return;
+            
+                if (!firstSwapTile) {
+                    firstSwapTile = tile;
+                    tile.classList.add('selected')
+                }
+                else {
+                    const secondTile = tile;
+                
+                    // Swap values
+                    const tempValue = firstSwapTile.dataset.value // dataset is used since divs don't have values. the div is instantiated with data-value in the renderBoard function
+                    firstSwapTile.dataset.value = secondTile.dataset.value;
+                    secondTile.dataset.value = tempValue;
+                
+                    // Update tile text
+                    const tempText = firstSwapTile.textContent;
+                    firstSwapTile.textContent = secondTile.textContent;
+                    secondTile.textContent = tempText;
+                
+                    // Updating Visuals
+                    firstSwapTile.classList.remove("selected");
+                    isSwapping = false;
+                    swapsLeft--;
+                    updateSwapBars();
+                    document.body.classList.remove("swap-mode");
+                    hideSwapMessage();
+                }
+            })
+            //-----------------------------------------------------------------------------------------------------//
 
             // Adds tile to container
             boardContainer.appendChild(tile);
@@ -304,6 +343,50 @@ document.getElementById("startAgainBtn").addEventListener("click", function() {
     renderBoard(board);
 })
 
+// Updating visuals for the powerup swap bars
+function updateSwapBars() {
+    // Grabs all the swap bars via the css class on the div containing the bars
+    const bars = document.querySelectorAll(".swap-bars .bar");
+    bars.forEach((bar, index) => {
+        if (index < swapsLeft){
+            bar.classList.add('filled');
+        }
+        else{
+            bar.classList.remove('filled');
+        }
+    })
+}
+
+
+// Enables tiles to be clicked and have their values swapped
+function swap() {
+    if (swapsLeft > 0){
+        isSwapping = true;
+        console.log("HI")
+        firstSwapTile = null
+        document.body.classList.add("swap-mode");
+        showSwapMessage();
+    }
+}
+
+function showSwapMessage() {
+    document.querySelector(".score-container").classList.add("hidden");
+    document.getElementById("swap-message").classList.remove("hidden");
+}
+
+function hideSwapMessage() {
+    document.getElementById("swap-message").classList.add("hidden");
+    document.querySelector(".score-container").classList.remove("hidden");
+}
+function cancelSwap(){
+    if (firstSwapTile){
+        firstSwapTile.classList.remove("selected");
+    }
+    isSwapping = false;
+    firstSwapTile = null;
+    document.body.classList.remove("swap-mode");
+    hideSwapMessage();
+}
 
 
 // Initial rendering of the board

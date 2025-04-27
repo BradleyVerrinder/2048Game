@@ -10,7 +10,8 @@
     <div class="main-wrapper">
         <div class="header">
             <h1><strong>2048</strong></h1>
-            <div class="score-container">
+            <div class="powerup-message-wrapper">
+              <div class="score-container">
                 <div class="score-box">
                     <span class="label">SCORE</span>
                     <span class="value" id="score">0</span>
@@ -19,6 +20,12 @@
                     <span class="label">BEST</span>
                     <span class="value" id="best-score">0</span>
                 </div>
+            </div>
+            <!--Swap message section -->
+            <div id="swap-message" class="swap-message hidden">
+              <p>SWAP TWO TILES</p>
+              <button id="cancel-swap" onclick="cancelSwap()">Cancel</button>
+            </div>
             </div>
             <div class="new-game-container">
                 <div class="feedback">
@@ -42,15 +49,15 @@
         <div class="bottom-button-panel">
             <div class="action-wrapper">
               <button class="action-button"><img src="Undo.png" alt="Undo"></button>
-              <div class="charge-bars">
+              <div class="undo-bars">
                 <div class="bar filled"></div>
                 <div class="bar filled"></div>
                 <div class="bar filled"></div>
               </div>
             </div>
             <div class="action-wrapper">
-              <button class="action-button"><img src="Swap.png" alt="Swap"></button>
-              <div class="charge-bars">
+              <button class="action-button" onclick="swap()"><img src="Swap.png" alt="Swap"></button>
+              <div class="swap-bars">
                 <div class="bar filled"></div>
                 <div class="bar filled"></div> <!--set class to bar when empty-->
                 <div class="bar filled"></div>
