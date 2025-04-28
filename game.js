@@ -341,6 +341,22 @@ document.getElementById("startAgainBtn").addEventListener("click", function() {
     score = 0;
     scoreDOM.textContent = 0;
 
+    //Resetting powerups
+    undosLeft = 3;
+    swapsLeft = 3;
+    bars = document.querySelectorAll(".undo-bars .bar");
+    bars.forEach((bar) => {
+            bar.classList.add('filled');
+    })
+
+    bars = document.querySelectorAll(".swap-bars .bar");
+    bars.forEach((bar) => {
+            bar.classList.add('filled');
+    })
+    bars = document.querySelectorAll(".charge-bars .bar");
+    bars.forEach((bar) => {
+            bar.classList.add('filled');
+    })
     
     // Add random tiles to start
     addRandomTile(board);
