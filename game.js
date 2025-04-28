@@ -12,6 +12,8 @@ let isSwapping = false;
 let firstSwapTile = null;
 let swapsLeft = 3;
 
+let canUndo = true;
+
 
 function renderBoard(board){
 
@@ -63,7 +65,7 @@ function renderBoard(board){
                     firstSwapTile.classList.remove("selected");
                     isSwapping = false;
                     swapsLeft--;
-                    updateSwapBars();
+                    updateBars("swap");
                     document.body.classList.remove("swap-mode");
                     hideSwapMessage();
                 }
@@ -129,11 +131,14 @@ function handleKeyPress(e){
 
 let direction = ""
 
+// Previous board state variable declared globally for undo function
+let oldboard = null;
+
 // Movement function
 function move(direction){
 
     // JSON.stringify used to compare the boards state before and after a move. Arrays cannot be directly compared so you need to stringify the board
-    let oldBoard = JSON.stringify(board);
+    oldBoard = JSON.stringify(board);
 
     switch(direction){
         case "left":
@@ -161,6 +166,7 @@ function move(direction){
         addRandomTile(board);      // Only add tile if something moved
         renderBoard(board);        // Update the HTML
     }
+    canUndo = true; // Allows the user to click undo again after a move has been made
     isGameOver(board);
 }
 
@@ -344,18 +350,47 @@ document.getElementById("startAgainBtn").addEventListener("click", function() {
     renderBoard(board);
 })
 
+let bars;
+
 // Updating visuals for the powerup swap bars
-function updateSwapBars() {
-    // Grabs all the swap bars via the css class on the div containing the bars
-    const bars = document.querySelectorAll(".swap-bars .bar");
-    bars.forEach((bar, index) => {
-        if (index < swapsLeft){
-            bar.classList.add('filled');
-        }
-        else{
-            bar.classList.remove('filled');
-        }
-    })
+function updateBars(powerup) {
+    switch(powerup){
+        case "undo":
+            // Grabs all the swap bars via the css class on the div containing the bars
+            bars = document.querySelectorAll(".undo-bars .bar");
+            bars.forEach((bar, index) => {
+                if (index < undosLeft){
+                    bar.classList.add('filled');
+                }
+                else{
+                    bar.classList.remove('filled');
+                }
+            })
+            break;
+        case "swap":
+            // Grabs all the swap bars via the css class on the div containing the bars
+            bars = document.querySelectorAll(".swap-bars .bar");
+            bars.forEach((bar, index) => {
+                if (index < swapsLeft){
+                    bar.classList.add('filled');
+                }
+                else{
+                    bar.classList.remove('filled');
+                }
+            })
+            break;
+        case "bomb":
+            // Grabs all the swap bars via the css class on the div containing the bars
+            bars = document.querySelectorAll(".charge-bars .bar");
+            bars.forEach((bar, index) => {
+                if (index < swapsLeft){
+                    bar.classList.add('filled');
+                }
+                else{
+                    bar.classList.remove('filled');
+                }
+            })
+    }
 }
 
 
@@ -363,7 +398,6 @@ function updateSwapBars() {
 function swap() {
     if (swapsLeft > 0){
         isSwapping = true;
-        console.log("HI")
         firstSwapTile = null
         document.body.classList.add("swap-mode");
         showSwapMessage();
@@ -379,14 +413,39 @@ function hideSwapMessage() {
     document.getElementById("swap-message").classList.add("hidden");
     document.querySelector(".score-container").classList.remove("hidden");
 }
-function cancelSwap(){
-    if (firstSwapTile){
+function cancelSwap() {
+    if (firstSwapTile) {
         firstSwapTile.classList.remove("selected");
     }
     isSwapping = false;
     firstSwapTile = null;
     document.body.classList.remove("swap-mode");
-    hideSwapMessage();
+
+    // Trigger shake animation on swap message
+    const swapMessage = document.getElementById("swap-message");
+    swapMessage.classList.add("shake");
+
+    // Remove the class after animation finishes, so it can be reused later
+    setTimeout(() => {
+        swapMessage.classList.remove("shake");
+        hideSwapMessage();
+    }, 400); // Match the animation duration (0.4s)
+}
+
+let undosLeft = 3;
+document.getElementsByClassName("undo-button").disabled = !canUndo;
+
+function undo(){
+    if (undosLeft > 0){
+        if (canUndo){
+            board = JSON.parse(oldBoard);
+            renderBoard(board);
+            undosLeft--;
+            updateBars("undo");
+            console.log("undo function")
+            canUndo = false;
+        }
+    }
 }
 
 
