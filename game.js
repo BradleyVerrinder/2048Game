@@ -10,7 +10,7 @@ let board = [
 // POWERUPS LOGIC
 let isSwapping = false;
 let firstSwapTile = null;
-let swapsLeft = 3;
+let swapsLeft = 0;
 
 let canUndo = true;
 
