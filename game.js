@@ -42,32 +42,55 @@ function renderBoard(board){
             //--------------------------------------------------------------------------------------------//
             // Makes all tiles clickable and allows user to swap 2 tiles of their choice
             tile.addEventListener("click", () => {
-                if (!isSwapping) return;
-            
-                if (!firstSwapTile) {
-                    firstSwapTile = tile;
-                    tile.classList.add('selected')
+                if (!isSwapping){
+                    if(!isBombing){
+                        return;
+                    }
+                    else{
+                        // Loops through rows
+                        for (let row = 0; row < board.length; row++){
+                            // Loops through columns inside the rows
+                            for (let col = 0; col < board[row].length; col++){
+                                if (board[row][col] == tile.dataset.value){
+                                    board[row][col] = 0;
+                                }
+                            }
+                        }
+                        console.log("bombs away");
+                        isBombing = false;
+                        bombsLeft--;
+                        updateBars("bomb");
+                        document.body.classList.remove("swap-mode");
+                        renderBoard(board);
+                        return;
+                    }
                 }
-                else {
-                    const secondTile = tile;
-                
-                    // Swap values
-                    const tempValue = firstSwapTile.dataset.value // dataset is used since divs don't have values. the div is instantiated with data-value in the renderBoard function
-                    firstSwapTile.dataset.value = secondTile.dataset.value;
-                    secondTile.dataset.value = tempValue;
-                
-                    // Update tile text
-                    const tempText = firstSwapTile.textContent;
-                    firstSwapTile.textContent = secondTile.textContent;
-                    secondTile.textContent = tempText;
-                
-                    // Updating Visuals
-                    firstSwapTile.classList.remove("selected");
-                    isSwapping = false;
-                    swapsLeft--;
-                    updateBars("swap");
-                    document.body.classList.remove("swap-mode");
-                    hideSwapMessage();
+                else{
+                    if (!firstSwapTile) {
+                        firstSwapTile = tile;
+                        tile.classList.add('selected')
+                    }
+                    else {
+                        const secondTile = tile;
+                    
+                        // Swap values
+                        const tempValue = firstSwapTile.dataset.value // dataset is used since divs don't have values. the div is instantiated with data-value in the renderBoard function
+                        firstSwapTile.dataset.value = secondTile.dataset.value;
+                        secondTile.dataset.value = tempValue;
+                    
+                        // Update tile text
+                        const tempText = firstSwapTile.textContent;
+                        firstSwapTile.textContent = secondTile.textContent;
+                        secondTile.textContent = tempText;
+
+                        // Updating Visuals
+                        firstSwapTile.classList.remove("selected");
+                        isSwapping = false;
+                        swapsLeft--;
+                        updateBars("swap");
+                        document.body.classList.remove("swap-mode");
+                        hideSwapMessage();
+                    }
                 }
             })
             //-----------------------------------------------------------------------------------------------------//
@@ -138,7 +161,7 @@ let oldboard = null;
 function move(direction){
 
     // JSON.stringify used to compare the boards state before and after a move. Arrays cannot be directly compared so you need to stringify the board
-    oldBoard = JSON.stringify(board);
+    oldboard = JSON.stringify(board);
 
     switch(direction){
         case "left":
@@ -162,9 +185,10 @@ function move(direction){
     }
     let newBoard = JSON.stringify(board); // After move, check if board changed
 
-    if (oldBoard !== newBoard) {
+    if (oldboard !== newBoard) {
         addRandomTile(board);      // Only add tile if something moved
-        renderBoard(board);        // Update the HTML
+        renderBoard(board);       // Update the HTML
+        checkForPowerUps(board);
     }
     canUndo = true; // Allows the user to click undo again after a move has been made
     isGameOver(board);
@@ -342,21 +366,14 @@ document.getElementById("startAgainBtn").addEventListener("click", function() {
     scoreDOM.textContent = 0;
 
     //Resetting powerups
-    undosLeft = 3;
-    swapsLeft = 3;
-    bars = document.querySelectorAll(".undo-bars .bar");
-    bars.forEach((bar) => {
-            bar.classList.add('filled');
-    })
+    undosLeft = 0;
+    swapsLeft = 0;
+    bombsLeft = 0;
 
-    bars = document.querySelectorAll(".swap-bars .bar");
-    bars.forEach((bar) => {
-            bar.classList.add('filled');
-    })
-    bars = document.querySelectorAll(".charge-bars .bar");
-    bars.forEach((bar) => {
-            bar.classList.add('filled');
-    })
+    // Reset UI bars
+    updateBars("undo");
+    updateBars("swap");
+    updateBars("bomb");
     
     // Add random tiles to start
     addRandomTile(board);
@@ -370,45 +387,98 @@ let bars;
 
 // Updating visuals for the powerup swap bars
 function updateBars(powerup) {
+    let bars, count;
+
     switch(powerup){
         case "undo":
             // Grabs all the swap bars via the css class on the div containing the bars
             bars = document.querySelectorAll(".undo-bars .bar");
-            bars.forEach((bar, index) => {
-                if (index < undosLeft){
-                    bar.classList.add('filled');
-                }
-                else{
-                    bar.classList.remove('filled');
-                }
-            })
+            count = undosLeft;
             break;
         case "swap":
             // Grabs all the swap bars via the css class on the div containing the bars
             bars = document.querySelectorAll(".swap-bars .bar");
-            bars.forEach((bar, index) => {
-                if (index < swapsLeft){
-                    bar.classList.add('filled');
-                }
-                else{
-                    bar.classList.remove('filled');
-                }
-            })
+            count = swapsLeft;
             break;
         case "bomb":
             // Grabs all the swap bars via the css class on the div containing the bars
-            bars = document.querySelectorAll(".charge-bars .bar");
-            bars.forEach((bar, index) => {
-                if (index < swapsLeft){
-                    bar.classList.add('filled');
-                }
-                else{
-                    bar.classList.remove('filled');
-                }
-            })
+            bars = document.querySelectorAll(".bomb-bars .bar");
+            count = bombsLeft;
     }
+
+    bars.forEach((bar, index) => {
+        if (index < count) {
+            bar.classList.add('filled');
+        } else {
+            bar.classList.remove('filled');
+        }
+    });
 }
 
+let awardedPowerUps = {
+    undo: [],
+    swap: [],
+    bomb: []
+};
+
+// This function prevents the user from getting unlimited powerups and only receives them after reaching certain values on the board
+function checkForPowerUps(board) {
+    // Check for Undo Power-ups (64 and 256)
+    if (hasTile(board, 64) && !awardedPowerUps.undo.includes(64)) {
+        undosLeft = 1; // First undo power-up
+        awardedPowerUps.undo.push(64); // Mark 64 as used for undo
+        updateBars("undo"); // Update the UI for undo power-up
+    } else if (hasTile(board, 256) && !awardedPowerUps.undo.includes(256)) {
+        if(undosLeft === 1){
+            undosLeft = 2; // Second undo power-up
+            awardedPowerUps.undo.push(256); // Mark 256 as used for undo
+            updateBars("undo");
+        }
+        else if (undosLeft === 0){
+            undosLeft = 1;
+            awardedPowerUps.undo.push(256); // Mark 256 as used for undo
+            updateBars("undo");
+        }
+    }
+
+    // Check for Swap Power-ups (128 and 512)
+    if (hasTile(board, 128) && !awardedPowerUps.swap.includes(128)) {
+        swapsLeft = 1; // First swap power-up
+        awardedPowerUps.swap.push(128); // Mark 128 as used for swap
+        updateBars("swap");
+    } else if (hasTile(board, 512) && !awardedPowerUps.swap.includes(512)) {
+        if(swapsLeft === 1){
+            swapsLeft = 2; // Second swap power-up
+            awardedPowerUps.swap.push(512); // Mark 512 as used for swap
+            updateBars("swap");
+        }
+        else if (swapsLeft === 0){
+            swapsLeft = 1; // Second swap power-up
+            awardedPowerUps.swap.push(512); // Mark 512 as used for swap
+            updateBars("swap");
+        }
+
+    }
+
+    // Check for Bomb Power-ups (256 and 1024)
+    if (hasTile(board, 256) && !awardedPowerUps.bomb.includes(256)) {
+        bombsLeft = 1; // First bomb power-up
+        awardedPowerUps.bomb.push(256); // Mark 256 as used for bomb
+        updateBars("bomb");
+    } else if (hasTile(board, 1024) && !awardedPowerUps.bomb.includes(1024)) {
+        if(bombsLeft === 1){
+            bombsLeft = 2; // Second bomb power-up
+            awardedPowerUps.bomb.push(1024); // Mark 1024 as used for bomb
+            updateBars("bomb");
+        }
+        else if (bombsLeft === 0){
+            bombsLeft = 1;
+            awardedPowerUps.bomb.push(1024); // Mark 1024 as used for bomb
+            updateBars("bomb");
+        }
+
+    }
+}
 
 // Enables tiles to be clicked and have their values swapped
 function swap() {
@@ -448,19 +518,37 @@ function cancelSwap() {
     }, 400); // Match the animation duration (0.4s)
 }
 
-let undosLeft = 3;
-document.getElementsByClassName("undo-button").disabled = !canUndo;
+let undosLeft = 0;
+const undoButton = document.getElementsByClassName("undo-button");
+undoButton.disabled = (undosLeft === 0);
 
 function undo(){
     if (undosLeft > 0){
         if (canUndo){
-            board = JSON.parse(oldBoard);
+            board = JSON.parse(oldboard);
             renderBoard(board);
             undosLeft--;
             updateBars("undo");
             console.log("undo function")
             canUndo = false;
         }
+    }
+}
+
+let bombsLeft = 0
+let isBombing = false;
+
+// Precaution to avoid the user using the bomb too early and allowing the grid to become empty (this will break the game)
+function hasTile(board, value) {
+    return board.some(row => row.includes(value));
+}
+
+
+function bomb(){
+    if (bombsLeft > 0 && has128(board)){
+
+        isBombing = true;
+        document.body.classList.add('swap-mode');
     }
 }
 

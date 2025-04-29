@@ -330,7 +330,7 @@ a:hover {
   animation: shake 0.4s;
 }
 
-.charge-bars {
+.bomb-bars {
   display: flex;
   gap: 4px;
   margin-top: 12px;
