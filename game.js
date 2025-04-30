@@ -194,9 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return;
   
       if (Math.abs(dx) > Math.abs(dy)) {
-        dx > 0 ? slideRight() : slideLeft();
+        dx > 0 ? move("right") : move("left");
       } else {
-        dy > 0 ? slideDown() : slideUp();
+        dy > 0 ? move("down") : move("up");
       }
   
       e.preventDefault(); // Block scrolling
