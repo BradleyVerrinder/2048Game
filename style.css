@@ -321,10 +321,10 @@ a:hover {
 }
 
 #gameContainer {
-  position: relative;
-  width: max-content;
-  margin: auto;
+  width: 100vw;
+  height: 100vh;
   touch-action: none;   /* disables browser gestures */
+  user-select: none;
 }
 
 
