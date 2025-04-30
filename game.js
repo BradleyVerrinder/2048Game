@@ -72,6 +72,26 @@ function renderBoard(board){
                     }
                     else {
                         const secondTile = tile;
+
+
+                        // Find positions of both tiles in the board array
+                        let firstPos, secondPos;
+
+                        // Loop through board and assign first position of the first tile selected 
+                        for (let row = 0; row < 4; row++) {
+                            for (let col = 0; col < 4; col++) {
+                                if (board[row][col] == firstSwapTile.dataset.value && !firstPos) {
+                                    firstPos = { row, col };
+                                } else if (board[row][col] == secondTile.dataset.value && !secondPos) {
+                                    secondPos = { row, col };
+                                }
+                            }
+                        }
+                    
+                        // Swap the actual values in the board array
+                        const temp = board[firstPos.row][firstPos.col];
+                        board[firstPos.row][firstPos.col] = board[secondPos.row][secondPos.col];
+                        board[secondPos.row][secondPos.col] = temp;                        
                     
                         // Swap values
                         const tempValue = firstSwapTile.dataset.value // dataset is used since divs don't have values. the div is instantiated with data-value in the renderBoard function
@@ -345,21 +365,22 @@ function isGameOver(board){
     if (!hasEmptyTile(board) && !hasMergeableTiles(board)){
         // Showing game over mesage
         document.getElementById("gameOverMessage").classList.remove("hidden");
-        console.log("game over")
+
+        // Disable powerup buttons
+        document.querySelector(".undo-button").disabled = true;
+        document.querySelector(".swap-button").disabled = true;
+        document.querySelector(".bomb-button").disabled = true;
     }
+
 }
 
-// Resetting the game upon click
-document.getElementById("startAgainBtn").addEventListener("click", function() {
+function startNewGame(){
     board = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ];
-
-    // Hide the game over message
-    document.getElementById("gameOverMessage").classList.add("hidden");
 
     // Resetting score after restarting game
     score = 0;
@@ -381,6 +402,16 @@ document.getElementById("startAgainBtn").addEventListener("click", function() {
 
     // Re-render the board
     renderBoard(board);
+};
+
+
+// Resetting the game upon click
+document.getElementById("startAgainBtn").addEventListener("click", function() {
+
+    startNewGame();
+
+    // Hide the game over message
+    document.getElementById("gameOverMessage").classList.add("hidden");
 })
 
 let bars;
@@ -575,6 +606,22 @@ function bomb(){
     }
 }
 
+// Start New Game button code
+const newGameModal = document.getElementById("newGameModal");
+const confirmNewGameBtn = document.getElementById("confirmNewGame");
+const cancelNewGameBtn = document.getElementById("cancelNewGame");
+
+function newGame(){
+    newGameModal.classList.remove("hidden");
+}
+
+function confirmNewGame(){
+    newGameModal.classList.add("hidden");
+    startNewGame();
+}
+function cancelNewGame(){
+    newGameModal.classList.add("hidden");
+}
 
 // Initial rendering of the board
 addRandomTile(board)

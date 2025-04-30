@@ -38,8 +38,8 @@
                 <div class="feedback">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLScZldyVgauCIUTfGVlV90-7Za_6kYUSMGcaNmh6WGIfOAK_RA/viewform?pli=1">Give Feedback</a>
                 </div>
-                <div class="score-box">
-                    <button class="new-game-button">New Game</span>
+                <div class="score-box" id="new-game">
+                    <button class="new-game-button" onclick="newGame()">New Game</span>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="action-wrapper">
-              <button class="action-button" onclick="swap()"><img src="Swap.png" alt="Swap"></button>
+              <button class="swap-button" onclick="swap()"><img src="Swap.png" alt="Swap"></button>
               <div class="swap-bars">
                 <div class="bar"></div>
                 <div class="bar"></div> <!--set class to bar when empty-->
@@ -71,7 +71,7 @@
               </div>
             </div>
             <div class="action-wrapper">
-              <button class="action-button" onclick="bomb()"><img src="bomb.png" alt="Bomb"></button>
+              <button class="bomb-button" onclick="bomb()"><img src="bomb.png" alt="Bomb"></button>
               <div class="bomb-bars">
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -79,6 +79,15 @@
               </div>
             </div>
           </div>
+    </div>
+    <div id="newGameModal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Start a New Game?</h2>
+        <p>Are you sure you want to start a new game?</p>
+        <p>All progress will be lost.</p>
+        <button id="confirmNewGame" onclick="confirmNewGame()">Start New Game</button>
+        <button id="cancelNewGame" onclick="cancelNewGame()">Cancel</button>
+      </div>
     </div>
     <script src="game.js"></script>
 </body>
