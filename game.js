@@ -173,10 +173,10 @@ function handleKeyPress(e){
 }
 
 
-document.getElementById("game-container").addEventListener("swiped-left", moveLeft);
-document.getElementById("game-container").addEventListener("swiped-right", moveRight);
-document.getElementById("game-container").addEventListener("swiped-up", moveUp);
-document.getElementById("game-container").addEventListener("swiped-down", moveDown);
+document.getElementById("gameContainer").addEventListener("swiped-left", slideLeft);
+document.getElementById("gameContainer").addEventListener("swiped-right", slideRight);
+document.getElementById("gameContainer").addEventListener("swiped-up", slideUp);
+document.getElementById("gameContainer").addEventListener("swiped-down", slideDown);
 
 const container = document.getElementById("gameContainer");
 
