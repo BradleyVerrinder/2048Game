@@ -429,7 +429,7 @@ function startNewGame(){
     updateBars("bomb");
 
     //Resetting powerups awarded
-    let awardedPowerUps = {
+    awardedPowerUps = {
         undo: [],
         swap: [],
         bomb: []
