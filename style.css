@@ -57,6 +57,37 @@ body {
   font-family: 'Rubik';
 }
 
+#cancel-swap:hover{
+  cursor: pointer;
+}
+
+.bomb-message{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #534f48;
+  border-radius: 10px;
+  padding: 10px 10px;
+  text-align: center;
+  color: #fff;
+  min-width: 80px;
+  max-height: 40px;
+  font-family: 'Rubik';
+}
+
+.bomb-message button{
+  background-color: #33312b;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-family: 'Rubik';
+}
+
+#cancel-bomb:hover {
+  cursor: pointer;
+}
+
 .hidden{
   display: none;
 }

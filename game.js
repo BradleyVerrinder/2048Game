@@ -56,7 +56,7 @@ function renderBoard(board){
                                 }
                             }
                         }
-                        console.log("bombs away");
+                        hideBombMessage();
                         isBombing = false;
                         bombsLeft--;
                         updateBars("bomb");
@@ -529,7 +529,6 @@ function undo(){
             renderBoard(board);
             undosLeft--;
             updateBars("undo");
-            console.log("undo function")
             canUndo = false;
         }
     }
@@ -544,11 +543,35 @@ function hasTile(board, value) {
 }
 
 
-function bomb(){
-    if (bombsLeft > 0 && has128(board)){
+function showBombMessage() {
+    document.querySelector(".score-container").classList.add("hidden");
+    document.getElementById("bomb-message").classList.remove("hidden");
+}
 
+function hideBombMessage() {
+    document.getElementById("bomb-message").classList.add("hidden");
+    document.querySelector(".score-container").classList.remove("hidden");
+}
+function cancelBomb() {
+    isBombing = false;
+    document.body.classList.remove("swap-mode");
+
+    // Trigger shake animation on swap message
+    const bombMessage = document.getElementById("bomb-message");
+    bombMessage.classList.add("shake");
+
+    // Remove the class after animation finishes, so it can be reused later
+    setTimeout(() => {
+        bombMessage.classList.remove("shake");
+        hideBombMessage();
+    }, 400); // Match the animation duration (0.4s)
+}
+
+function bomb(){
+    if (bombsLeft > 0){
         isBombing = true;
         document.body.classList.add('swap-mode');
+        showBombMessage();
     }
 }
 
