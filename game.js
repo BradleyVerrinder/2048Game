@@ -172,50 +172,36 @@ function handleKeyPress(e){
     }
 }
 
-
-document.getElementById("gameContainer").addEventListener("swiped-left", slideLeft);
-document.getElementById("gameContainer").addEventListener("swiped-right", slideRight);
-document.getElementById("gameContainer").addEventListener("swiped-up", slideUp);
-document.getElementById("gameContainer").addEventListener("swiped-down", slideDown);
-
-const container = document.getElementById("gameContainer");
-
-let touchStartX = 0;
-let touchStartY = 0;
-
-container.addEventListener("touchstart", function (e) {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-  // Optional: prevent accidental scrolling when touching the game
-  // e.preventDefault(); // Uncomment this if needed
-}, { passive: false });
-
-container.addEventListener("touchend", function (e) {
-  let touchEndX = e.changedTouches[0].clientX;
-  let touchEndY = e.changedTouches[0].clientY;
-
-  let dx = touchEndX - touchStartX;
-  let dy = touchEndY - touchStartY;
-
-  // Only handle if the swipe was meaningful (over threshold)
-  if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
-    e.preventDefault(); // Stop scrolling
-
-    if (Math.abs(dx) > Math.abs(dy)) {
-      if (dx > 0) {
-        slideRight();
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("gameContainer");
+  
+    let touchStartX = 0;
+    let touchStartY = 0;
+  
+    container.addEventListener("touchstart", function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: false });
+  
+    container.addEventListener("touchend", function (e) {
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+  
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+  
+      // Threshold to ignore accidental tiny swipes
+      if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return;
+  
+      if (Math.abs(dx) > Math.abs(dy)) {
+        dx > 0 ? slideRight() : slideLeft();
       } else {
-        slideLeft();
+        dy > 0 ? slideDown() : slideUp();
       }
-    } else {
-      if (dy > 0) {
-        slideDown();
-      } else {
-        slideUp();
-      }
-    }
-  }
-}, { passive: false });
+  
+      e.preventDefault(); // Block scrolling
+    }, { passive: false });
+  });
 
 let direction = ""
 
