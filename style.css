@@ -324,6 +324,7 @@ a:hover {
   position: relative;
   width: max-content;
   margin: auto;
+  touch-action: none;   /* disables browser gestures */
 }
 
 
