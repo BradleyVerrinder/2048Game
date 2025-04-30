@@ -172,6 +172,41 @@ function handleKeyPress(e){
     }
 }
 
+// Touch movement logic for tablets and phones
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener("touchstart", function (e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, false);
+
+document.addEventListener("touchend", function (e) {
+  let touchEndX = e.changedTouches[0].clientX;
+  let touchEndY = e.changedTouches[0].clientY;
+
+  let dx = touchEndX - touchStartX;
+  let dy = touchEndY - touchStartY;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    if (dx > 30) {
+      // Swipe Right
+      slideRight();
+    } else if (dx < -30) {
+      // Swipe Left
+      slideLeft();
+    }
+  } else {
+    if (dy > 30) {
+      // Swipe Down
+      slideDown();
+    } else if (dy < -30) {
+      // Swipe Up
+      slideUp();
+    }
+  }
+}, false);
+
 let direction = ""
 
 // Previous board state variable declared globally for undo function
