@@ -172,40 +172,44 @@ function handleKeyPress(e){
     }
 }
 
-// Touch movement logic for tablets and phones
+const container = document.getElementById("gameContainer");
+
 let touchStartX = 0;
 let touchStartY = 0;
 
-document.addEventListener("touchstart", function (e) {
+container.addEventListener("touchstart", function (e) {
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
-}, false);
+  // Optional: prevent accidental scrolling when touching the game
+  // e.preventDefault(); // Uncomment this if needed
+}, { passive: false });
 
-document.addEventListener("touchend", function (e) {
+container.addEventListener("touchend", function (e) {
   let touchEndX = e.changedTouches[0].clientX;
   let touchEndY = e.changedTouches[0].clientY;
 
   let dx = touchEndX - touchStartX;
   let dy = touchEndY - touchStartY;
 
-  if (Math.abs(dx) > Math.abs(dy)) {
-    if (dx > 30) {
-      // Swipe Right
-      slideRight();
-    } else if (dx < -30) {
-      // Swipe Left
-      slideLeft();
-    }
-  } else {
-    if (dy > 30) {
-      // Swipe Down
-      slideDown();
-    } else if (dy < -30) {
-      // Swipe Up
-      slideUp();
+  // Only handle if the swipe was meaningful (over threshold)
+  if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+    e.preventDefault(); // Stop scrolling
+
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 0) {
+        slideRight();
+      } else {
+        slideLeft();
+      }
+    } else {
+      if (dy > 0) {
+        slideDown();
+      } else {
+        slideUp();
+      }
     }
   }
-}, false);
+}, { passive: false });
 
 let direction = ""
 
