@@ -69,6 +69,37 @@
   .restart{
     right: 60px!important;
   }
+
+  .undo-button{
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .undo-button img{
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .swap-button{
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .swap-button img{
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .bomb-button{
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .bomb-button img{
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .bottom-button-panel{
+    padding: 10px 15px !important;
+  }
 }
 
 @media (max-width: 548px){
