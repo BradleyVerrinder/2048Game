@@ -192,7 +192,7 @@ container.addEventListener("touchend", function (e) {
   let dy = touchEndY - touchStartY;
 
   // Only handle if the swipe was meaningful (over threshold)
-  if (Math.abs(dx) > 30 || Math.abs(dy) > 30) {
+  if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
     e.preventDefault(); // Stop scrolling
 
     if (Math.abs(dx) > Math.abs(dy)) {
