@@ -172,6 +172,12 @@ function handleKeyPress(e){
     }
 }
 
+
+document.getElementById("game-container").addEventListener("swiped-left", moveLeft);
+document.getElementById("game-container").addEventListener("swiped-right", moveRight);
+document.getElementById("game-container").addEventListener("swiped-up", moveUp);
+document.getElementById("game-container").addEventListener("swiped-down", moveDown);
+
 const container = document.getElementById("gameContainer");
 
 let touchStartX = 0;
