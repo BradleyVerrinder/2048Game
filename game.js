@@ -427,6 +427,14 @@ function startNewGame(){
     updateBars("undo");
     updateBars("swap");
     updateBars("bomb");
+
+    //Resetting powerups awarded
+    let awardedPowerUps = {
+        undo: [],
+        swap: [],
+        bomb: []
+    };
+    
     
     // Add random tiles to start
     addRandomTile(board);
