@@ -65,6 +65,10 @@
     height: 60px !important;
     font-size: 22px;
   }
+
+  .restart{
+    right: 60px!important;
+  }
 }
 
 @media (max-width: 548px){
@@ -89,6 +93,13 @@
   .header {
     flex-direction: column;
     align-items: center;
+  }
+
+  .restart-div .restart{
+    display: inline !important;
+    position: absolute; /* or fixed if you want it to stay in the same position while scrolling */
+    top: 16;
+    right: 100 ;
   }
   
   .header h1{
@@ -160,6 +171,15 @@ body {
   margin-bottom: 20px;
 }
 
+.restart{
+  position: absolute; /* or fixed if you want it to stay in the same position while scrolling */
+  top: 16;
+  right: 60;
+  padding: 10px;
+  border: none;
+  background-color: #faf8ef;
+  display: none;
+}
 .score-container{
   display: flex;
   justify-content: center;

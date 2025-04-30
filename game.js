@@ -172,6 +172,7 @@ function handleKeyPress(e){
     }
 }
 
+// Touch screen  movement logic
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("gameContainer");
   
