@@ -65,6 +65,8 @@ function renderBoard(board){
                         bombsLeft--;
                         updateBars("bomb");
                         document.body.classList.remove("swap-mode");
+                        document.querySelector(".swap-button").disabled = false;
+                        document.querySelector(".undo-button").disabled = false;
                         renderBoard(board);
                         return;
                     }
@@ -107,6 +109,8 @@ function renderBoard(board){
                         isSwapping = false;
                         swapsLeft--;
                         updateBars("swap");
+                        document.querySelector(".bomb-button").disabled = false;
+                        document.querySelector(".undo-button").disabled = false;
                         document.body.classList.remove("swap-mode");
                         hideSwapMessage();
                     }
@@ -155,6 +159,7 @@ document.addEventListener("keydown", handleKeyPress);
 
 function handleKeyPress(e){
     if (isSwapping) return; // Don't move when swapping
+    if (isBombing) return; //Don't move when bombing
     switch (e.key){
         case "ArrowUp":
             move("up");
@@ -553,6 +558,8 @@ function checkForPowerUps(board) {
 // Enables tiles to be clicked and have their values swapped
 function swap() {
     if (swapsLeft > 0){
+        document.querySelector(".bomb-button").disabled = true;
+        document.querySelector(".undo-button").disabled = true;
         isSwapping = true;
         firstSwapTile = null
         document.body.classList.add("swap-mode");
@@ -576,6 +583,10 @@ function cancelSwap() {
     isSwapping = false;
     firstSwapTile = null;
     document.body.classList.remove("swap-mode");
+
+    // Other powerups can be used again
+    document.querySelector(".bomb-button").disabled = false;
+    document.querySelector(".undo-button").disabled = false;
 
     // Trigger shake animation on swap message
     const swapMessage = document.getElementById("swap-message");
@@ -626,6 +637,10 @@ function cancelBomb() {
     isBombing = false;
     document.body.classList.remove("swap-mode");
 
+    // Other powerups can be used again
+    document.querySelector(".swap-button").disabled = false;
+    document.querySelector(".undo-button").disabled = false;
+
     // Trigger shake animation on swap message
     const bombMessage = document.getElementById("bomb-message");
     bombMessage.classList.add("shake");
@@ -639,6 +654,8 @@ function cancelBomb() {
 
 function bomb(){
     if (bombsLeft > 0){
+        document.querySelector(".swap-button").disabled = true;
+        document.querySelector(".undo-button").disabled = true;
         isBombing = true;
         document.body.classList.add('swap-mode');
         showBombMessage();
