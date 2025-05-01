@@ -29,6 +29,10 @@ function renderBoard(board){
             const tile = document.createElement("div");
             tile.classList.add("tile");
 
+            // Assign a position to each tile so they can be swapped correctly
+            tile.dataset.row = row;
+            tile.dataset.col = col;
+
             // Get the value at the current row and column
             const value = board[row][col];
 
@@ -73,25 +77,20 @@ function renderBoard(board){
                     else {
                         const secondTile = tile;
 
-
-                        // Find positions of both tiles in the board array
-                        let firstPos, secondPos;
-
-                        // Loop through board and assign first position of the first tile selected 
-                        for (let row = 0; row < 4; row++) {
-                            for (let col = 0; col < 4; col++) {
-                                if (board[row][col] == firstSwapTile.dataset.value && !firstPos) {
-                                    firstPos = { row, col };
-                                } else if (board[row][col] == secondTile.dataset.value && !secondPos) {
-                                    secondPos = { row, col };
-                                }
-                            }
-                        }
+                        // Grabbing the actual position of the first tile and the second tile using the assigned values from the renderBoard function
+                        const firstPos = {
+                            row: parseInt(firstSwapTile.dataset.row),
+                            col: parseInt(firstSwapTile.dataset.col)
+                        };
+                        const secondPos = {
+                            row: parseInt(secondTile.dataset.row),
+                            col: parseInt(secondTile.dataset.col)
+                        };
                     
                         // Swap the actual values in the board array
                         const temp = board[firstPos.row][firstPos.col];
                         board[firstPos.row][firstPos.col] = board[secondPos.row][secondPos.col];
-                        board[secondPos.row][secondPos.col] = temp;                        
+                        board[secondPos.row][secondPos.col] = temp;                       
                     
                         // Swap values
                         const tempValue = firstSwapTile.dataset.value // dataset is used since divs don't have values. the div is instantiated with data-value in the renderBoard function
