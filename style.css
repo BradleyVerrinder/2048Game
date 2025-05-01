@@ -71,31 +71,31 @@
   }
 
   .undo-button{
-    width: 40px !important;
-    height: 40px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   .undo-button img{
-    width: 20px !important;
-    height: 20px !important;
+    width: 30px !important;
+    height: 30px !important;
   }
   .swap-button{
-    width: 40px !important;
-    height: 40px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   .swap-button img{
-    width: 20px !important;
-    height: 20px !important;
+    width: 30px !important;
+    height: 30px !important;
   }
   .bomb-button{
-    width: 40px !important;
-    height: 40px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   .bomb-button img{
-    width: 20px !important;
-    height: 20px !important;
+    width: 30px !important;
+    height: 30px !important;
   }
   .bottom-button-panel{
     padding: 10px 15px !important;
