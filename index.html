@@ -65,25 +65,28 @@
             </div>
         </div>
         <div class="bottom-button-panel">
-            <div class="action-wrapper">
+            <div class="action-wrapper tooltip">
               <button class="undo-button" onclick="undo()"><img src="Undo.png" alt="Undo"></button>
               <div class="undo-bars">
                 <div class="bar"></div>
                 <div class="bar"></div>
+                <span class="tooltiptext">Undo your last move</span>
               </div>
             </div>
-            <div class="action-wrapper">
+            <div class="action-wrapper tooltip">
               <button class="swap-button" onclick="swap()"><img src="Swap.png" alt="Swap"></button>
               <div class="swap-bars">
                 <div class="bar"></div>
                 <div class="bar"></div> <!--set class to bar when empty-->
+                <span class="tooltiptext">Swap two tiles</span>
               </div>
             </div>
-            <div class="action-wrapper">
+            <div class="action-wrapper tooltip">
               <button class="bomb-button" onclick="bomb()"><img src="bomb.png" alt="Bomb"></button>
               <div class="bomb-bars">
                 <div class="bar"></div>
                 <div class="bar"></div>
+                <span class="tooltiptext">Clear all tiles of a chosen value</span>
               </div>
             </div>
           </div>
