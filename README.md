@@ -1,7 +1,7 @@
 # 2048 Game 🎮
 
 Welcome to my version of the classic **2048** game — a fun and addictive sliding tile puzzle game!  
-Play it here 👉 [**Play 2048 Now**](https://bradleyverrinder.github.io/2048Game/) (**STILL IN PROGRESS**)
+Play it here 👉 [**Play 2048 Now**](https://bradleyverrinder.github.io/2048Game/)
 
 ---
 
@@ -17,6 +17,7 @@ Play it here 👉 [**Play 2048 Now**](https://bradleyverrinder.github.io/2048Gam
 ## ✨ Features
 
 - Score tracking (including **High Scores**)
+- Touch screen functionality
 - Game Over and Victory screens
 - Play directly in your browser – no downloads needed
 - Powerup abilities such as Undo, Swap and Bomb!
