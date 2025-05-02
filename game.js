@@ -414,7 +414,7 @@ function isGameOver(board){
 let hasWon = false;
 function checkWin(board) {
     const flat = board.flat();
-    if (flat.includes(16) && !hasWon) {
+    if (flat.includes(2048) && !hasWon) {
       hasWon = true;
       document.getElementById("winMessage").classList.remove("hidden");
   
