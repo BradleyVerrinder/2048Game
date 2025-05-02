@@ -245,6 +245,7 @@ function move(direction){
         addRandomTile(board);      // Only add tile if something moved
         renderBoard(board);       // Update the HTML
         checkForPowerUps(board);
+        checkWin(board);
     }
     canUndo = true; // Allows the user to click undo again after a move has been made
     isGameOver(board);
@@ -410,6 +411,33 @@ function isGameOver(board){
 
 }
 
+let hasWon = false;
+function checkWin(board) {
+    const flat = board.flat();
+    if (flat.includes(16) && !hasWon) {
+      hasWon = true;
+      document.getElementById("winMessage").classList.remove("hidden");
+  
+      // Confetti animation
+      confetti({
+        particleCount: 200,
+        spread: 90,
+        origin: { y: 0.6 }
+      });
+    }
+  }
+
+
+  document.getElementById("continueBtn").addEventListener("click", () => {
+    document.getElementById("winMessage").classList.add("hidden");
+  });
+  
+  document.getElementById("restartBtn").addEventListener("click", () => {
+    document.getElementById("winMessage").classList.add("hidden");
+    document.getElementById("gameOverMessage").classList.add("hidden");
+    startNewGame(); // You probably already have this function for resets
+  });
+
 function startNewGame(){
     board = [
         [0, 0, 0, 0],
@@ -417,6 +445,8 @@ function startNewGame(){
         [0, 0, 0, 0],
         [0, 0, 0, 0]
     ];
+
+    hasWon = false;
 
     // Resetting score after restarting game
     score = 0;

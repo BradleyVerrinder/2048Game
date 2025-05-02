@@ -54,6 +54,14 @@
                     <p>Game Over!</p>
                     <button id="startAgainBtn">Start Again</button>
                 </div>
+                <div id="winMessage" class="modal hidden">
+                  <div class="modal-content">
+                    <h2>🎉 You reached 2048!</h2>
+                    <p>Congratulations! Do you want to continue or start a new game?</p>
+                    <button id="continueBtn">Continue</button>
+                    <button id="restartBtn">New Game</button>
+                  </div>
+                </div>
             </div>
         </div>
         <div class="bottom-button-panel">
@@ -92,6 +100,7 @@
         <button id="cancelNewGame" onclick="cancelNewGame()">Cancel</button>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="game.js"></script>
 </body>
 </html>

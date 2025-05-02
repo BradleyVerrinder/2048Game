@@ -648,3 +648,14 @@ a:hover {
   padding: 10px 20px;
   font-size: 16px;
 }
+
+#winMessage h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-family: "Rubik";
+}
+
+#winMessage p {
+  font-family: 'Rubik';
+  margin-bottom: 20px;
+}
