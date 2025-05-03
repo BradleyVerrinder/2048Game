@@ -21,6 +21,7 @@ Play it here 👉 [**Play 2048 Now**](https://bradleyverrinder.github.io/2048Gam
 - Game Over and Victory screens
 - Play directly in your browser – no downloads needed
 - Powerup abilities such as Undo, Swap and Bomb!
+- Fully responsive on all devices
 
 ---
 
