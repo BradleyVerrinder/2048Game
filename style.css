@@ -63,6 +63,15 @@
   .tooltip:hover .tooltiptext {
     visibility: hidden!important;
   }
+
+  #gameOverMessage{
+    height: 70px!important;
+    align-items: center!important;
+  }
+
+  #startAgainBtn{
+    height: 70px;
+  }
   
 
   .tile {
