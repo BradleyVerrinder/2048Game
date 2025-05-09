@@ -527,6 +527,10 @@ a:hover {
   height: 40px;
 }
 
+button img {
+  pointer-events: none;
+}
+
 .undo-button {
   background-color: #bbada0;
   border: none;
