@@ -250,7 +250,6 @@ function move(direction){
         checkForPowerUps(board);
         checkWin(board);
         previousBoards[0] = oldboard;
-        console.log(previousBoards);
 
     }
     canUndo = true; // Allows the user to click undo again after a move has been made
