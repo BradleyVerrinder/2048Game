@@ -213,6 +213,9 @@ let direction = ""
 // Previous board state variable declared globally for undo function
 let oldboard = null;
 
+// List of previous boards (will only ever be 1)
+let previousBoards = [];
+
 // Movement function
 function move(direction){
 
@@ -246,6 +249,9 @@ function move(direction){
         renderBoard(board);       // Update the HTML
         checkForPowerUps(board);
         checkWin(board);
+        previousBoards[0] = oldboard;
+        console.log(previousBoards);
+
     }
     canUndo = true; // Allows the user to click undo again after a move has been made
     isGameOver(board);
@@ -636,11 +642,13 @@ undoButton.disabled = (undosLeft === 0);
 function undo(){
     if (undosLeft > 0){
         if (canUndo){
-            board = JSON.parse(oldboard);
-            renderBoard(board);
-            undosLeft--;
-            updateBars("undo");
-            canUndo = false;
+            if (previousBoards.length > 0){
+                board = JSON.parse(previousBoards[0]);
+                renderBoard(board);
+                undosLeft--;
+                updateBars("undo");
+                canUndo = false;
+            }
         }
     }
 }
