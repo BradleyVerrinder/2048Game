@@ -539,6 +539,7 @@ button img {
   box-shadow: 0 2px 0 #bbb5a6;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  z-index: 10;
 }
 
 .undo-button:hover {
@@ -558,6 +559,7 @@ button img {
   box-shadow: 0 2px 0 #bbb5a6;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  z-index: 10;
 }
 
 .swap-button:hover {
@@ -577,6 +579,7 @@ button img {
   box-shadow: 0 2px 0 #bbb5a6;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  z-index: 10;
 }
 
 .bomb-button:hover {
@@ -704,6 +707,7 @@ button img {
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .tooltip:hover .tooltiptext {
